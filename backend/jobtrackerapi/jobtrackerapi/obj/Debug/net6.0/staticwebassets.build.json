@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "pkwdUIIQfJkG/2CyPjCnh+VOOIhG0VtZXkXNWI+Rp0Y=",
+  "Source": "jobtrackerapi",
+  "BasePath": "_content/jobtrackerapi",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
