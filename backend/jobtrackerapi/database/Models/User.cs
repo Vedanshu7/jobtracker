@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace jobtrackerapi.Models
+namespace database.Models
 {
     public class User
     {

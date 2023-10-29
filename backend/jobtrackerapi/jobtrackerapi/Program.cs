@@ -1,5 +1,10 @@
-using jobtrackerapi.Data;
+using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using repository.Interface;
+using repository.Repositories;
+using service;
+using service.Mapping;
+using service.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,9 +14,17 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddDbContext<JobTrackerAPIDbContext>(options =>
+builder.Services.AddDbContext<database.context.DbContext>(options =>
         options.UseSqlServer(builder.Configuration.GetConnectionString("MyDbConnection")));
+var mapperConfig = new MapperConfiguration(mc =>
+{
+    mc.AddProfile(new MappingProfile());
+});
 
+IMapper mapper = mapperConfig.CreateMapper();
+builder.Services.AddSingleton(mapper);
+builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
