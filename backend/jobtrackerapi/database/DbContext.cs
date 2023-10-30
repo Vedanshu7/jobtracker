@@ -11,5 +11,6 @@ namespace database.context
         }
 
         public DbSet<User> User { get; set; }
+        public DbSet<Job> Job { get; set; }
     }
 }

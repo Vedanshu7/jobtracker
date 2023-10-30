@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using repository.Interface;
 using repository.Repositories;
 using service;
+using service.Interface;
 using service.Mapping;
 using service.Services;
 
@@ -25,6 +26,9 @@ IMapper mapper = mapperConfig.CreateMapper();
 builder.Services.AddSingleton(mapper);
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IJobService, JobService>();
+builder.Services.AddScoped<IJobRepository, JobRepository>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
