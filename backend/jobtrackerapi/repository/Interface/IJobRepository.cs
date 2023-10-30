@@ -3,14 +3,22 @@ using database.Models;
 
 namespace repository.Interface
 {
-	public interface IJobRepository
-	{
+    // This interface defines the contract for interacting with job-related data in a repository.
+    public interface IJobRepository
+    {
+        // Adds a job to the repository and returns the added job.
         public Job AddJob(Job job);
-        public Job GetJob(Guid id);
-        public List<Job> GetUsersJob(Guid userId);
-        public Job UpdateJob(Guid id);
-        public bool DeleteJob(Guid id);
 
+        // Retrieves a job by its unique identifier (ID).
+        public Job GetJob(Guid id);
+
+        // Retrieves a list of jobs associated with a specific user.
+        public List<Job> GetUsersJob(Guid userId);
+
+        // Updates a job based on its unique identifier and returns the updated job.
+        public Job UpdateJob(Guid id);
+
+        // Deletes a job based on its unique identifier and returns true if the operation was successful.
+        public bool DeleteJob(Guid id);
     }
 }
-
