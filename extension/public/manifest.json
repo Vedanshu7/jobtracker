@@ -6,5 +6,20 @@
     "default_popup": "popup.html",
     "default_title": "Open"
   },
-  "permissions": ["scripting"]
+  "permissions": ["scripting", "storage"],
+  "content_security_policy": {
+    "script-src": "'self' 'unsafe-inline' 'unsafe-eval' https://*.googleapis.com https://*.gstatic.com *.google.com https://*.ggpht.com *.googleusercontent.com blob:;",
+    "img-src": "'self' https://*.googleapis.com https://*.gstatic.com *.google.com  *.googleusercontent.com data:;",
+    "frame-src": "*.google.com;",
+    "connect-src": "'self' https://*.googleapis.com *.google.com https://*.gstatic.com  data: blob:;",
+    "font-src": "https://fonts.gstatic.com;",
+    "style-src": "'self' 'unsafe-inline' https://fonts.googleapis.com;",
+    "worker-src": "blob:;"
+  },
+  "host_permissions": [
+    "https://apis.google.com/",
+    "https://www.googleapis.com/",
+    "https://accounts.google.com/",
+    "https://apis.google.com/js/platform.js"
+  ]
 }
