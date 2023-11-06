@@ -3,6 +3,7 @@ import ReactDOM from "react-dom/client";
 import { initializeApp } from "firebase/app";
 import {
   getAuth,
+  signOut, // Use signOut instead of auth.signOut
   signInWithCredential,
   GoogleAuthProvider,
 } from "firebase/auth";
@@ -25,7 +26,7 @@ export const App = (props) => {
         );
         return;
       }
-
+      alert(JSON.stringify(auth));
       signInWithCredential(auth, GoogleAuthProvider.credential(null, token))
         .then((res) => {
           console.log("signed in!");
@@ -34,6 +35,17 @@ export const App = (props) => {
           alert(`SSO ended with an error: ${err}`);
         });
     });
+  };
+
+  const logout = (e) => {
+    // Use the signOut function to sign the user out
+    signOut(auth)
+      .then(() => {
+        setUser(null);
+      })
+      .catch((err) => {
+        alert(`Logout error: ${err}`);
+      });
   };
 
   React.useEffect(() => {
@@ -45,18 +57,16 @@ export const App = (props) => {
   if (undefined === user) return <h1>Loading...</h1>;
 
   if (user != null) {
-    alert(JSON.stringify(user));
     return (
       <div>
         <h1>Signed in as {user.email}.</h1>
-        <button onClick={auth.signOut.bind(auth)}>Sign Out?</button>
+        <button onClick={logout}>Sign Out</button>
       </div>
     );
   } else {
     return <button onClick={signIn}>Sign In with Google</button>;
   }
 };
-
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
