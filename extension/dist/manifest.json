@@ -6,13 +6,34 @@
     "default_popup": "popup.html",
     "default_title": "Open"
   },
-  "permissions": ["scripting", "storage", "identity"],
-
   "oauth2": {
-    "client_id": "180864587645-o76427qbv81muhaufhapiho535sla87t.apps.googleusercontent.com",
-    "scopes": ["https://www.googleapis.com/auth/userinfo.email"]
+    "client_id": "272434391305-vfeanmr429cnl3ckr8anbjp87rb6gekr.apps.googleusercontent.com",
+    "scopes": [
+      "https://www.googleapis.com/auth/userinfo.email"
+    ]
   },
   "content_security_policy": {
     "extension_pages": "script-src 'self'; object-src 'self'; script-src-elem 'self' 'unsafe-inline';"
-  }
+  },
+  "background": {
+    "service_worker": "serviceworker.js",
+    "type": "module"
+  },
+  "permissions": [
+    "scripting",
+    "storage",
+    "activeTab",
+    "tabs",
+    "identity"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "content.js"
+      ]
+    }
+  ]
 }

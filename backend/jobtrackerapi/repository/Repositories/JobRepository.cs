@@ -20,6 +20,7 @@ namespace repository.Repositories
         public Job AddJob(Job job)
         {
             // Add the provided job to the DbContext and save changes to the database.
+            dbContext.Add(job);
             dbContext.SaveChanges();
             return job;
         }
