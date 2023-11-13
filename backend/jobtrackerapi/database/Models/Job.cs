@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace database.Models
 {
@@ -6,6 +7,7 @@ namespace database.Models
     public class Job
     {
         // Unique identifier for the job.
+        [Key]
         public Guid Id { get; set; }
 
         // The title of the job.

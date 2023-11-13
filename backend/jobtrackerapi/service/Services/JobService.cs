@@ -25,5 +25,24 @@ namespace service.Services
             // Map the service layer Job object to a repository layer Job object, add it to the repository, and then map it back.
             return _mapper.Map<service.Models.Job>(jobRepository.AddJob(_mapper.Map<database.Models.Job>(job)));
         }
+
+        // This method deletes a job by its unique identifier (ID).
+        // It delegates the deletion operation to the jobRepository and returns the result.
+        public bool DeleteJob(Guid id)
+        {
+            return jobRepository.DeleteJob(id);
+        }
+
+        // This asynchronous method retrieves a job by its unique identifier (ID).
+        // It delegates the retrieval operation to the jobRepository, maps the result using AutoMapper,
+        // and returns a Task<Job> representing the retrieved job.
+        public async Task<Job> GetJob(Guid id)
+        {
+            // Retrieve the job from the jobRepository based on the provided ID.
+            var job = jobRepository.GetJob(id);
+
+            // Map the retrieved job to a Job model using AutoMapper.
+            return _mapper.Map<Job>(job);
+        }
     }
 }
