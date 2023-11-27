@@ -15,6 +15,12 @@ export const auth = getAuth(firebase);
 
 export const App = (props) => {
   const [user, setUser] = React.useState(undefined);
+  const moredetails = () => {
+    // Redirect to index.html in the template
+    chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+      chrome.tabs.update(tabs[0].id, { url: chrome.runtime.getURL('/website-template/index.html') });
+    });
+  };
 
   const signIn = (e) => {
     e.preventDefault();
@@ -64,7 +70,15 @@ export const App = (props) => {
       </div>
     );
   } else {
-    return <button onClick={signIn}>Sign In with Google</button>;
+    return (
+      <div>
+        <button onClick={signIn}>Sign In with Google</button>;
+        <button onClick={moredetails}> Click for More Details</button>; 
+
+      </div>
+
+    );
+   
   }
 };
 const root = ReactDOM.createRoot(document.getElementById("root"));
