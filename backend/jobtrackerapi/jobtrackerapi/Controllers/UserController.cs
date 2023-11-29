@@ -13,11 +13,25 @@ namespace jobtrackerapi.Controllers
             service = _userService;
         }
 
+<<<<<<< Updated upstream
         [HttpGet(Name = "GetUser")]
         [GoogleTokenValidationAttribute]
         public List<service.Models.User> Get()
+=======
+        // [HttpGet(Name = "GetUser")]
+        // public List<service.Models.User> Get()
+        // {
+        //     return service.GetAll().Result;
+        // }
+
+        
+        [HttpGet(Name ="jobs")]
+        public List<service.Models.Job> GetUserJobs(Guid userId)
+>>>>>>> Stashed changes
         {
-            return service.GetAll().Result;
+            return service.GetUserJobs(userId).Result;
         }
+
     }
+
 }

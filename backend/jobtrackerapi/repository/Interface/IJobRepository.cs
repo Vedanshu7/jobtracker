@@ -20,5 +20,7 @@ namespace repository.Interface
 
         // Deletes a job based on its unique identifier and returns true if the operation was successful.
         public bool DeleteJob(Guid id);
+
+        public List<Job> GetUserJobs(Guid userId);
     }
 }

@@ -10,5 +10,7 @@ namespace service
     public interface IUserService
     {
         public Task<List<User>> GetAll();
+
+        public Task<List<Job>> GetUserJobs(Guid userId);
     }
 }
