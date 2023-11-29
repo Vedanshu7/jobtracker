@@ -6,9 +6,12 @@
     "default_popup": "popup.html",
     "default_title": "Open"
   },
+  "incognito": "split",
   "oauth2": {
     "client_id": "272434391305-vfeanmr429cnl3ckr8anbjp87rb6gekr.apps.googleusercontent.com",
-    "scopes": ["https://www.googleapis.com/auth/userinfo.email"]
+    "scopes": [
+      "https://www.googleapis.com/auth/userinfo.email"
+    ]
   },
   "content_security_policy": {
     "extension_pages": "script-src 'self'; object-src 'self'; script-src-elem 'self' 'unsafe-inline';"
@@ -17,16 +20,22 @@
     "service_worker": "serviceworker.js",
     "type": "module"
   },
-  "permissions": ["scripting", "storage", "activeTab", "tabs", "identity"],
+  "permissions": [
+    "scripting",
+    "storage",
+    "activeTab",
+    "tabs",
+    "identity"
+  ],
   "content_scripts": [
     {
-      "matches": ["<all_urls>"],
-      "js": ["content.js"]
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "content.js"
+      ],
+      "incognito": "split"
     }
-  ],
-
-  "web_accessible_resources": [
-    "website-template/filter.js",
-    "website-template/img/*"
   ]
 }

@@ -14,6 +14,7 @@ namespace jobtrackerapi.Controllers
         }
 
         [HttpGet(Name = "GetUser")]
+        [GoogleTokenValidationAttribute]
         public List<service.Models.User> Get()
         {
             return service.GetAll().Result;

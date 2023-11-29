@@ -17,5 +17,9 @@ namespace database.context
 
         // Represents a database DbSet for the 'Job' entity.
         public DbSet<Job> Job { get; set; }
+
+        public DbSet<SingleSignOn> SingleSignOn { get; set; }
+
+        public DbSet<ProviderData> ProviderData { get; set; }
     }
 }
