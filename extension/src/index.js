@@ -21,7 +21,9 @@ export const App = () => {
   const moredetails = () => {
     // Redirect to index.html in the template
     chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-      chrome.tabs.update(tabs[0].id, { url: chrome.runtime.getURL('/ui/index.html') });
+      chrome.tabs.update(tabs[0].id, {
+        url: chrome.runtime.getURL("/ui/index.html"),
+      });
     });
   };
 
@@ -116,11 +118,10 @@ export const App = () => {
             });
         });
       } else {
-        console.error('Identity API is disabled in incognito windows.');
+        console.error("Identity API is disabled in incognito windows.");
       }
     });
   };
-
 
   const logout = (e) => {
     signOut(auth)
@@ -141,7 +142,7 @@ export const App = () => {
     return () => unsubscribe();
   }, []);
 
-  if (loading) return <h1>Loading...</h1>;
+  // if (loading) return <h1>Loading...</h1>;
 
   if (user != null) {
     return (

@@ -64,6 +64,13 @@ namespace repository.Repositories
             return job;
         }
 
+        public List<Job> GetUserJobs(Guid userId)
+        {
+            var jobs = dbContext.Job.Where(u=>u.userId == userId).ToList();
+
+            return jobs;
+        }
+
         // Retrieves a list of jobs associated with a specific user.
         public List<Job> GetUsersJob(Guid userId)
         {
