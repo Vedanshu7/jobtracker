@@ -19,7 +19,9 @@ export const App = () => {
   const moredetails = () => {
     // Redirect to index.html in the template
     chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-      chrome.tabs.update(tabs[0].id, { url: chrome.runtime.getURL('/ui/index.html') });
+      chrome.tabs.update(tabs[0].id, {
+        url: chrome.runtime.getURL("/ui/index.html"),
+      });
     });
   };
 
@@ -33,30 +35,36 @@ export const App = () => {
     // Check if the extension has incognito access
     chrome.extension.isAllowedIncognitoAccess((isAllowedAccess) => {
       if (isAllowedAccess) {
-        chrome.identity.getAuthToken({ interactive: true, scopes: ['profile', 'email'] }, (token) => {
-          if (chrome.runtime.lastError || !token) {
-            alert(
-              `SSO ended with an error: ${JSON.stringify(
-                chrome.runtime.lastError
-              )}`
-            );
-            return;
+        chrome.identity.getAuthToken(
+          { interactive: true, scopes: ["profile", "email"] },
+          (token) => {
+            if (chrome.runtime.lastError || !token) {
+              alert(
+                `SSO ended with an error: ${JSON.stringify(
+                  chrome.runtime.lastError
+                )}`
+              );
+              return;
+            }
+            signInWithCredential(
+              auth,
+              GoogleAuthProvider.credential(null, token)
+            )
+              .then((res) => {
+                alert(JSON.stringify(res));
+                console.log("signed in!");
+              })
+              .catch((err) => {
+                alert(`SSO ended with an error: ${err}`);
+              });
           }
-          signInWithCredential(auth, GoogleAuthProvider.credential(null, token))
-            .then((res) => {
-              alert(JSON.stringify(res));
-              console.log("signed in!");
-            })
-            .catch((err) => {
-              alert(`SSO ended with an error: ${err}`);
-            });
-        });
+        );
       } else {
-        console.error('Identity API is disabled in incognito windows.');
+        console.error("Identity API is disabled in incognito windows.");
       }
     });
   };
-  
+
   const logout = (e) => {
     signOut(auth)
       .then(() => {
@@ -76,7 +84,7 @@ export const App = () => {
     return () => unsubscribe();
   }, []);
 
-  if (loading) return <h1>Loading...</h1>;
+  // if (loading) return <h1>Loading...</h1>;
 
   if (user != null) {
     return (
@@ -89,8 +97,8 @@ export const App = () => {
     // Render the "Sign In" button only if not in incognito mode
     return (
       <div>
-         <button onClick={signIn}>Sign In with Google</button>;
-        <button onClick={moredetails}> Click for More Details</button>; 
+        <button onClick={signIn}>Sign In with Google</button>;
+        <button onClick={moredetails}> Click for More Details</button>;
       </div>
     );
   } else {
