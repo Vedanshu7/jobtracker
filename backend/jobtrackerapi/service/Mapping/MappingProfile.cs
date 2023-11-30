@@ -17,6 +17,10 @@ namespace service.Mapping
 
             // Map from the 'Job' entity in the database to the 'Job' model in the service layer.
             CreateMap<database.Models.Job, service.Models.Job>();
+
+            CreateMap<service.Models.SingleSignOn, database.Models.SingleSignOn>();
+
+            CreateMap<service.Models.ProviderData, database.Models.ProviderData>();
         }
     }
 }

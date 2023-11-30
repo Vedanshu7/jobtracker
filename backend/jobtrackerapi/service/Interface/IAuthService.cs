@@ -9,6 +9,6 @@ namespace service.Interface
 {
     public interface IAuthService
     {
-        public Task<bool> auth(SingleSignOn singleSignOn);
+        public Task<User> auth(SingleSignOn singleSignOn);
     }
 }

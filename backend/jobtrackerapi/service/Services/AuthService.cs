@@ -23,9 +23,9 @@ namespace service.Services
             this._mapper = mapper;
         }
 
-        public async Task<bool> auth(SingleSignOn singleSignOn)
+        public async Task<User> auth(SingleSignOn singleSignOn)
         {
-            return authRepostiory.auth(_mapper.Map<database.Models.SingleSignOn>(singleSignOn));
+            return _mapper.Map<service.Models.User> (authRepostiory.auth(_mapper.Map<database.Models.SingleSignOn>(singleSignOn)));
         }
     }
 }

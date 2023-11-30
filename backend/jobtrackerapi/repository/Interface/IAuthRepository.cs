@@ -9,6 +9,6 @@ namespace repository.Interface
 {
     public interface IAuthRepository
     {
-        public bool auth(SingleSignOn singleSignOn);
+        public User auth(SingleSignOn singleSignOn);
     }
 }

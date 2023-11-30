@@ -1,8 +1,8 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using FirebaseAdmin;
+using FirebaseAdmin.Auth;
+using Google.Apis.Auth.OAuth2;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
-using System.Net.Http;
-using System.Threading.Tasks;
 
 [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
 public class GoogleTokenValidationAttribute : Attribute, IAsyncAuthorizationFilter
@@ -47,9 +47,32 @@ public class GoogleTokenValidationAttribute : Attribute, IAsyncAuthorizationFilt
 
     private async Task<bool> VerifyGoogleToken(string accessToken)
     {
-        var client = new HttpClient();
-        var response = await client.GetAsync($"https://www.googleapis.com/oauth2/v3/tokeninfo?access_token={accessToken}");
+        try
+        {
+            FirebaseApp firebaseApp = FirebaseApp.DefaultInstance;
 
-        return response.IsSuccessStatusCode;
+            if (firebaseApp == null)
+            {
+                firebaseApp = FirebaseApp.Create(new AppOptions
+                {
+                    Credential = GoogleCredential.FromFile(Path.Combine(Directory.GetCurrentDirectory(), "Firebase", "credentials.json")),
+                });
+            }
+
+            FirebaseToken? decodedToken = await FirebaseAdmin.Auth.FirebaseAuth.DefaultInstance
+                .VerifyIdTokenAsync(accessToken);
+
+            // Token is valid
+            return true;
+        }
+        catch (Exception ex)
+        {
+            // Token verification failed
+            Console.WriteLine($"Firebase token verification failed: {ex.Message}");
+            return false;
+        }
     }
+
+
+
 }

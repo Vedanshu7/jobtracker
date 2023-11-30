@@ -27,7 +27,6 @@ namespace service.Models
         public string? OperationType { get; set; }
 
         public Guid UserId { get; set; } // Foreign key
-        public User User { get; set; }
     }
 
     public class ProviderData
@@ -39,9 +38,6 @@ namespace service.Models
         public string? Email { get; set; }
         public string? PhoneNumber { get; set; }
         public string? PhotoURL { get; set; }
-
         public Guid SingleSignOnId { get; set; } // Foreign key
-        public SingleSignOn SingleSignOn { get; set; } // Navigation property
     }
-
 }

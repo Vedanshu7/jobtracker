@@ -19,8 +19,11 @@ namespace repository.Repositories
             this.dbContext = dbContext;
         }
 
-        public bool auth(SingleSignOn singleSignOn)
+        public User auth(SingleSignOn singleSignOn)
         {
+            singleSignOn.Id = Guid.Empty;
+            singleSignOn.ProviderData.ForEach(x => x.Id = Guid.Empty);
+            singleSignOn.UserId = Guid.Empty;
             User user = dbContext.User.Where(u => u.Email.Equals(singleSignOn.Email)).FirstOrDefault();
             if (user == null)
             {
@@ -30,8 +33,9 @@ namespace repository.Repositories
                 newUser.FirstName = displayName?.Split(' ').Length > 0 
                     ? displayName?.Split(' ')[0] : "";
                 newUser.LastName = displayName?.Split(' ').Length > 0 
-                    ? displayName?.Split(' ')[0] : "";
-
+                    ? displayName?.Split(' ')[1] : "";
+                newUser.CreatedDate = DateTime.Now;
+                newUser.UpdatedDate = DateTime.Now;
                 dbContext.Add(newUser);
                 dbContext.SaveChanges();
             }
@@ -39,12 +43,34 @@ namespace repository.Repositories
             User savedUser = dbContext.User.Where(u => u.Email.Equals(singleSignOn.Email)).FirstOrDefault();
             if(savedUser != null)
             {
-                singleSignOn.UserId = savedUser.Id ;
+                singleSignOn.UserId = savedUser.Id;
+                var listData = singleSignOn.ProviderData.ToList();
+                singleSignOn.ProviderData = null;
                 dbContext.Add(singleSignOn);
                 dbContext.SaveChanges();
-                return true;
+
+
+                listData.ForEach((x) =>
+                {
+                    ProviderData providerData = new ProviderData();
+                    providerData.Email = x.Email;
+                    providerData.PhoneNumber = x.PhoneNumber;
+                    providerData.Uid = x.Uid;
+                    providerData.PhotoURL = x.PhotoURL;
+                    providerData.ProviderId = x.ProviderId;
+                    providerData.DisplayName = x.DisplayName;
+                    providerData.SingleSignOnId = singleSignOn.Id;
+                    dbContext.Add(providerData);
+                    dbContext.SaveChanges();
+                });
+
+                singleSignOn.ProviderData = listData;
+                dbContext.Update(singleSignOn);
+                dbContext.SaveChanges();
+
+                return savedUser;
             }
-            return false;
+            return null;
         }
     }
 }

@@ -16,13 +16,10 @@ namespace jobtrackerapi.Controllers
 
         [GoogleTokenValidation]
         [HttpPost]
-        public IActionResult Index(SingleSignOn singleSignOn)
+        public User Index(SingleSignOn singleSignOn)
         {
-            if (service.auth(singleSignOn).Result)
-            {
-                return NoContent();
-            }
-            return BadRequest();
+            var result = service.auth(singleSignOn).Result;
+            return result;
         }
     }
 }
