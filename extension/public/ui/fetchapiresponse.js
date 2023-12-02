@@ -17,11 +17,11 @@ export function fetchAndDisplayData() {
 }
 export function getStatusLabel(status) {
   switch (status) {
-    case 1:
+    case 0:
       return "Applied";
-    case 2:
+    case 1:
       return "In Review";
-    case 3:
+    case 2:
       return "Accepted";
     default:
       return "Apply Now";
@@ -69,6 +69,12 @@ export function updateJobTiles(apiResponse) {
 
     // Set the content to the job item
     jobItem.innerHTML = content;
+    // Make the entire job tile clickable
+    jobItem.addEventListener("click", () => {
+      // Redirect to the job details page with the job ID
+      window.location.href = `job-details.html?jobId=${job.id}`;
+    });
+
 
     // Append the job item to the tab-1 container
     document.getElementById("tab-1").appendChild(jobItem);

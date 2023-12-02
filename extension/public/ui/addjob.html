@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Add Job - JobTracker</title>
+    <script src="jobpost.js"></script>
+    <!-- Add your meta tags, stylesheets, and other head content here -->
+  </head>
+
+  <body>
+    <div class="container-xxl py-5">
+      <div class="container">
+        <h1 class="text-center mb-5 wow fadeInUp" data-wow-delay="0.1s">
+          ADD A JOB
+        </h1>
+
+        <!-- Add Job Form -->
+        <form id="addJobForm" class="wow fadeInUp" data-wow-delay="0.3s">
+          <div class="row g-3">
+            <div class="col-md-6">
+              <label for="title" class="form-label">Job Title</label>
+              <input
+                type="text"
+                class="form-control"
+                id="title"
+                name="title"
+                required
+              />
+            </div>
+            <div class="col-md-6">
+              <label for="location" class="form-label">Location</label>
+              <input
+                type="text"
+                class="form-control"
+                id="location"
+                name="location"
+                required
+              />
+            </div>
+            <div class="col-md-6">
+              <label for="salary" class="form-label">Salary</label>
+              <input
+                type="text"
+                class="form-control"
+                id="salary"
+                name="salary"
+                required
+              />
+            </div>
+            <!-- Add more fields as needed -->
+
+            <div class="col-12">
+              <button type="submit" class="btn btn-primary">Post Job</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- JavaScript for Adding a Job -->
+  </body>
+</html>
