@@ -1,5 +1,4 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace database.Models
 {
@@ -40,8 +39,10 @@ namespace database.Models
         // The date when the job entry was last updated.
         public DateTime? UpdatedDate { get; set; }
 
+        // The URL to logout
         public string? logoUrl { get; set; }
 
+        // The ID for a job
         public string? jobId { get; set; }
     }
 }
