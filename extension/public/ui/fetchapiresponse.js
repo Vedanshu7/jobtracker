@@ -72,7 +72,7 @@ export function updateJobTiles(apiResponse) {
     // Make the entire job tile clickable
     jobItem.addEventListener("click", () => {
       // Redirect to the job details page with the job ID
-      window.location.href = `job-details.html?jobId=${job.id}`;
+      window.location.href = `job-detail.html?jobId=${job.id}`;
     });
 
 

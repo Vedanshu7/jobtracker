@@ -64,25 +64,25 @@ namespace jobtrackerapi.Controllers
 
         // This HTTP GET action method is used to retrieve a job by its ID.
         [HttpGet("{id}")]
-        public IActionResult GetJob(Guid id)
+        public Job GetJob(Guid id)
         {
             try
             {
-                var job = service.GetJob(id);
+                var job = service.GetJob(id).Result;
 
                 if (job != null)
                 {
-                    return Ok(job); // Return a 200 OK response with the job if found.
+                    return job; // Return a 200 OK response with the job if found.
                 }
                 else
                 {
-                    return NotFound($"Job with ID {id} not found."); // Return a 404 Not Found if the job is not found.
+                    return new Job(); // Return a 404 Not Found if the job is not found.
                 }
             }
             catch (Exception ex)
             {
                 // Log or handle the exception based on your application's requirements
-                return StatusCode(500, "Internal server error");
+                return new Job();
             }
         }
 

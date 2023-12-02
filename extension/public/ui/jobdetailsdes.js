@@ -5,14 +5,17 @@ document.addEventListener("DOMContentLoaded", function () {
     const urlParams = new URLSearchParams(window.location.search);
     const jobId = urlParams.get('jobId');
 
+    
     // Fetch job details based on the jobId
     fetchJobDetails(jobId);
+
+    document.getElementById("updateJobButton").addEventListener("click", updateJobDetails);
 });
 
 async function fetchJobDetails(jobId) {
     try {
         // Make a request to your API endpoint to fetch job details
-        const response = await fetch(`https://your-api.com/jobDetails?jobId=${jobId}`);
+        const response = await fetch(`https://localhost:7100/Job/${jobId}`);
         
         if (!response.ok) {
             throw new Error(`Error fetching job details. Status: ${response.status}`);
@@ -29,7 +32,7 @@ async function fetchJobDetails(jobId) {
 }
 
 function displayJobDetails(jobDetails) {
-    const jobDetailsContainer = document.getElementById("my-job-details-container");
+    const jobDetailsContainer = document.getElementById("job-details-container");
 
     // Create the job details content
     const content = `
@@ -50,7 +53,8 @@ async function updateJobDetails() {
     const urlParams = new URLSearchParams(window.location.search);
     const jobId = urlParams.get("jobId");
 
-
+    console.log(jobId);
+    console.log(urlParams);
     // Fetch job details
     const jobDetails = await fetchJobDetails(jobId);
 
@@ -75,4 +79,3 @@ async function updateJobDetails() {
     }
 }
 
-document.getElementById("updateJobButton").addEventListener("click", updateJobDetails);

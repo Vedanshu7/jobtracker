@@ -38,11 +38,18 @@ namespace service.Services
         // and returns a Task<Job> representing the retrieved job.
         public async Task<Job> GetJob(Guid id)
         {
-            // Retrieve the job from the jobRepository based on the provided ID.
-            var job = jobRepository.GetJob(id);
+            try
+            {
+                // Retrieve the job from the jobRepository based on the provided ID.
+                var job = jobRepository.GetJob(id);
 
-            // Map the retrieved job to a Job model using AutoMapper.
-            return _mapper.Map<Job>(job);
+                // Map the retrieved job to a Job model using AutoMapper.
+                return _mapper.Map<Job>(job);
+            }
+            catch (Exception ex)
+            {
+                return new Job();
+            }
         }
 
         public Task<Dictionary<string, string>> GetStatuses(Guid userId)
