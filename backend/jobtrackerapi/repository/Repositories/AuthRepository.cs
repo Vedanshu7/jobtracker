@@ -1,11 +1,7 @@
 ﻿using database.context;
 using database.Models;
 using repository.Interface;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace repository.Repositories
 {
