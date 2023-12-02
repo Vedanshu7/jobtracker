@@ -1,4 +1,5 @@
 // script.js
+import React, { useState, useEffect } from 'react';
 
 export function fetchAndDisplayData() {
   // Fetch the API data
@@ -49,12 +50,68 @@ function getdatestring(dateString) {
   return new Intl.DateTimeFormat('en-US', options).format(dateObject);
 }
 
-function checkSalary(salary){
-  if(/\d/.test(salary)){
+function checkSalary(salary) {
+  if (/\d/.test(salary)) {
     return salary;
   }
   return "Not Mentioned";
 }
+
+// Import useState and useEffect if not already imported
+
+export function deleteJob(jobId) {
+  // Make a DELETE request to the API endpoint with the job ID
+
+  // fetch(`https://localhost:7100/User?userId=/${jobId}`, {
+  //   method: 'DELETE',
+  //   headers: {
+  //     'Content-Type': 'application/json',
+  //     // Add any other headers if needed
+  //   },
+  // })
+    // .then(response => {
+    //   if (!response.ok) {
+    //     throw new Error(`Failed to delete job with ID ${jobId}`);
+    //   }
+    //   // Handle success as needed, maybe refresh the job list
+    //   console.log(`Job with ID ${jobId} deleted successfully`);
+    //   // You may want to update the job list after deletion
+    // })
+    // .catch(error => {
+    //   console.error('Error deleting job:', error);
+    //   // Handle errors as needed
+    // });
+}
+
+// Component using the deleteJob function
+const JobList = ({ apiResponse }) => {
+
+  // Function to handle job deletion
+  const handleDeleteJob = (jobId) => {
+    // Call the deleteJob function with the job ID
+    deleteJob(jobId);
+    // You may want to update the UI or job list after deletion
+  };
+
+  return (
+    <div>
+      {apiResponse.map((job) => (
+        <div key={job.id} className="job-item p-4 mb-4">
+          {/* Other job item content remains unchanged */}
+
+          {/* Add a delete button with an onClick event */}
+          <button
+            className="btn btn-danger"
+            onClick={() => handleDeleteJob(job.id)}
+          >
+            Delete
+          </button>
+        </div>
+      ))}
+    </div>
+  );
+};
+
 
 export function updateJobTiles(apiResponse) {
   // Clear existing job tiles
@@ -78,7 +135,7 @@ export function updateJobTiles(apiResponse) {
       }</span>
               
               <span class="text-truncate me-0"><i class="far fa-money-bill-alt text-primary me-2"></i>${checkSalary(job.salary
-  )}</span>
+      )}</span>
             </div>
           </div>
           <div class="col-sm-12 col-md-4 d-flex flex-column align-items-start align-items-md-end justify-content-center">
@@ -111,3 +168,5 @@ export function updateJobTiles(apiResponse) {
 document.addEventListener("DOMContentLoaded", function () {
   fetchAndDisplayData();
 });
+
+export default JobList;
