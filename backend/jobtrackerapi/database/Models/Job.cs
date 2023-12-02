@@ -39,5 +39,9 @@ namespace database.Models
 
         // The date when the job entry was last updated.
         public DateTime? UpdatedDate { get; set; }
+
+        public string? logoUrl { get; set; }
+
+        public string? jobId { get; set; }
     }
 }

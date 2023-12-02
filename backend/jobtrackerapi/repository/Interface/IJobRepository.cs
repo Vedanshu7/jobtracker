@@ -22,5 +22,7 @@ namespace repository.Interface
         public bool DeleteJob(Guid id);
 
         public List<Job> GetUserJobs(Guid userId);
+
+        public Dictionary<string, string> GetStatuses(Guid userId);
     }
 }

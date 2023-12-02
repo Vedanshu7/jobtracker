@@ -18,12 +18,20 @@ namespace jobtrackerapi.Controllers
         }
 
         // This HTTP POST action method is used to add a job to the system.
+        [GoogleTokenValidation]
         [HttpPost]
         public Job AddJob(Job job)
         {
             // Call the AddJob method from the injected service to add the job and return the result.
             // Note that .Result is used to block and get the result from the asynchronous operation.
             return service.AddJob(job).Result;
+        }
+
+        [GoogleTokenValidation]
+        [HttpGet("GetStatus")]
+        public Dictionary<string,string> GetStatuses(Guid userId)
+        {
+            return service.GetStatuses(userId).Result;
         }
 
         // This HTTP DELETE action method is used to delete a job by its ID.

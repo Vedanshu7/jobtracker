@@ -16,5 +16,7 @@ namespace service.Interface
         // Deletes a job by its ID and returns a boolean indicating the success of the operation.
         // Note: This method is synchronous, returning a boolean indicating the success of the deletion.
         public bool DeleteJob(Guid id);
+
+        public Task<Dictionary<string, string>> GetStatuses(Guid userId);
     }
 }

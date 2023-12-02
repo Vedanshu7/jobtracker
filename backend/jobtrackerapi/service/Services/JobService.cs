@@ -44,5 +44,10 @@ namespace service.Services
             // Map the retrieved job to a Job model using AutoMapper.
             return _mapper.Map<Job>(job);
         }
+
+        public Task<Dictionary<string, string>> GetStatuses(Guid userId)
+        {
+            return Task.FromResult(jobRepository.GetStatuses(userId));
+        }
     }
 }

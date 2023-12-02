@@ -33,7 +33,8 @@ namespace service.Services
 
             return _mapper.Map<List<User>>(user);
         }
-        
+
+
         public async Task<List<Job>> GetUserJobs(Guid userId){
             var jobs = jobRepository.GetUserJobs(userId);
 

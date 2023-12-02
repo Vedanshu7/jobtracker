@@ -5,6 +5,9 @@ namespace service.Models
     // This class represents a model for a job in the service layer.
     public class Job
     {
+        public string? logoUrl { get; set; }
+
+        public string? jobId { get; set; }
         // Unique identifier for the job.
         public Guid Id { get; set; }
 

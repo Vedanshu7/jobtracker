@@ -18,6 +18,11 @@ namespace repository.Repositories
         // Adds a job to the database and returns the added job.
         public Job AddJob(Job job)
         {
+            var alreadyExists = dbContext.Job.Where(x => job.jobId == x.jobId).FirstOrDefault();
+            if (alreadyExists != null)
+            {
+                return alreadyExists;
+            }
             // Add the provided job to the DbContext and save changes to the database.
             dbContext.Add(job);
             dbContext.SaveChanges();
@@ -62,6 +67,17 @@ namespace repository.Repositories
             }
 
             return job;
+        }
+
+        public Dictionary<string, string> GetStatuses(Guid userId)
+        {
+            var userJobs = dbContext.Job.Where(x=>x.userId.Equals(userId)).ToList();
+            Dictionary<string,string> statusMap = new Dictionary<string,string>();
+            foreach (Job job in userJobs)
+            {
+                statusMap.Add(job.jobId, ((StatusEnum)job.status).ToString());
+            }
+            return statusMap;
         }
 
         public List<Job> GetUserJobs(Guid userId)

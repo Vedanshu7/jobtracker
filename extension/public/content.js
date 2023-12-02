@@ -1,28 +1,16 @@
-//alert("Hello From Extension");
-
-// Wait for the window to finish loading before executing the code
-window.onload = function () {
-
-    // Select the element with the class 'job-card-container'
-    var tileObject = document.getElementsByClassName('job-card-container');
-
-    // Create an HTML element with a job card list footer and append it to the selected tileObject
-    var htmlRef = '<ul class="job-card-list__footer-wrapper job-card-container__footer-wrapper flex-shrink-zero display-flex t-sans t-12 t-black--light t-normal t-roman"><li class="job-card-container__footer-item inline-flex align-items-right" style="color:red"> Applied </li></ul>';
-    var htmlObject = document.createElement('ul');
-    htmlObject.innerHTML = htmlRef;
-    tileObject[0].appendChild(htmlObject);
+document.addEventListener('click', (event) => {
 
     // Add a click event listener to an element with the class 'jobs-apply-button'.
     document.getElementsByClassName('jobs-apply-button')[0].addEventListener("click", async () => {
         // Create an object with various properties based on the information from the page
-
         let obj = {
+            "logoUrl": document.getElementsByClassName("jobs-search-results-list__list-item--active")[0].querySelector('img.ivm-view-attr__img--centered.EntityPhoto-square-4').src,
             "title": document.getElementsByClassName('t-24 t-bold job-details-jobs-unified-top-card__job-title')[0].innerText,
-            "companyName": document.getElementsByClassName('job-details-jobs-unified-top-card__primary-description')[0].getElementsByClassName('app-aware-link ')[0].innerText,
-
+            "companyName": document.getElementsByClassName('job-details-jobs-unified-top-card__primary-description-container')[0].getElementsByClassName('app-aware-link')[0].innerText,
+            "jobId": "",
             // Define a function for extracting location information
             "location_func": () => {
-                let clonedDiv = document.getElementsByClassName('job-details-jobs-unified-top-card__primary-description')[0].cloneNode(true);
+                let clonedDiv = document.getElementsByClassName('job-details-jobs-unified-top-card__primary-description-container')[0].cloneNode(true);
 
                 // Remove all anchor tags and spans from the cloned div
                 var anchors = clonedDiv.querySelectorAll('a');
@@ -65,17 +53,23 @@ window.onload = function () {
             },
 
             // Additional properties
-            "message": "onclicked",
+            "message": "onclickedWeb",
             "salary": "",
             "location": "",
             "jobKeywords": "",
-            "url": ""
+            "url": "",
+            "userId": ""
         };
 
         // Populate the remaining properties of the object using the defined functions
         obj.jobKeywords = obj.jobKeywords_func();
         obj.location = obj.location_func();
         obj.salary = obj.salary_func();
+        obj.jobId = document.getElementsByClassName("jobs-search-results-list__list-item--active")[0].dataset.jobId;
+        // Example: Capture scroll events
+        // document.addEventListener('scroll', () => {
+
+        // });
 
         // Send a message to the background script of the extension.
         chrome.runtime.sendMessage(obj, (response) => {
@@ -84,4 +78,4 @@ window.onload = function () {
             console.log('received user data', response);
         });
     });
-}
+});

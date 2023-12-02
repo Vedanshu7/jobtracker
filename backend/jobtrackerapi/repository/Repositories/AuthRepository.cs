@@ -19,6 +19,7 @@ namespace repository.Repositories
             this.dbContext = dbContext;
         }
 
+
         public User auth(SingleSignOn singleSignOn)
         {
             singleSignOn.Id = Guid.Empty;

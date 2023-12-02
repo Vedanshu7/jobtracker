@@ -1,4 +1,6 @@
 using AutoMapper;
+using jobtrackerapi.CustomException;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.EntityFrameworkCore;
 using repository.Interface;
 using repository.Repositories;
@@ -6,6 +8,7 @@ using service;
 using service.Interface;
 using service.Mapping;
 using service.Services;
+using System.Net;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -62,6 +65,8 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+    app.UseExceptionHandler("/error");
+    app.UseHsts();
 }
 
 app.UseHttpsRedirection();

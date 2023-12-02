@@ -12,5 +12,6 @@ namespace service
         public Task<List<User>> GetAll();
 
         public Task<List<Job>> GetUserJobs(Guid userId);
+
     }
 }

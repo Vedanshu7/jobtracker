@@ -3,8 +3,8 @@
   "name": "JOB TRACKER EXTENSION",
   "version": "1.0.1",
   "action": {
-    "default_popup": "popup.html",
-    "default_title": "Open"
+    "default_icon": "logo192.png",
+    "default_popup": "popup.html"
   },
   "incognito": "split",
   "oauth2": {
@@ -25,8 +25,10 @@
     "storage",
     "activeTab",
     "tabs",
+    "webNavigation",
     "identity"
   ],
+  "host_permissions": ["http://*/*", "https://*/*"],
   "content_scripts": [
     {
       "matches": [

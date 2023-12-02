@@ -29,9 +29,10 @@ public class GoogleTokenValidationAttribute : Attribute, IAsyncAuthorizationFilt
         {
             // Verify the Google Access Token
             isTokenValid = await VerifyGoogleToken(accessToken);
+            if(isTokenValid)
+                context.HttpContext.Session.Set($"VerifiedToken_{accessToken}", new byte[1]);
 
             // Cache the verification result in the session
-            context.HttpContext.Session.Set($"VerifiedToken_{accessToken}", new byte[1]);
         }
 
         if (!isTokenValid)
