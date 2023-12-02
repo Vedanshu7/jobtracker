@@ -1,15 +1,6 @@
 // popup.js
 
 document.addEventListener('DOMContentLoaded', function () {
-  // Fetch the content of index.html
-  // fetch(chrome.runtime.getURL('index.html'))
-  //   .then(response => response.text())
-  //   .then(data => {
-  //     // Insert the content into the #website-template div
-  //     document.getElementById('website-template').innerHTML = data;
-  //   })
-  //   .catch(error => console.error('Error fetching index.html:', error));
-
   document.getElementById('clickButton').addEventListener('click', function () {
     chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
       chrome.scripting.executeScript({
@@ -18,8 +9,6 @@ document.addEventListener('DOMContentLoaded', function () {
       });
     });
   });
-
-
 });
 
 
@@ -59,7 +48,7 @@ function injectContentScript() {
 
     });
 
-
+    
     // Add a click event listener to an element with the class 'jobs-apply-button'.
     document.getElementsByClassName('jobs-apply-button')[0].addEventListener("click", async () => {
       // Create an object with various properties based on the information from the page

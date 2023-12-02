@@ -226,6 +226,12 @@ export const App = () => {
         // Set the content to the job item
         jobItem.innerHTML = content;
 
+        jobItem.addEventListener("click", () => {
+          // Redirect to the job details page with the job ID
+          chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+            chrome.tabs.create({ url: chrome.runtime.getURL("/ui/job-detail.html?jobId="+job.id) });
+          });
+        });
         // Append the job item to the tab-1 container
         document.getElementById("joblist").appendChild(jobItem);
         i = i + 1;

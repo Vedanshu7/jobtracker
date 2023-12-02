@@ -34,6 +34,28 @@ export function getStatusLabel(status) {
   }
 }
 
+function getdatestring(dateString) {
+  const dateObject = new Date(dateString);
+
+  const options = {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+    hour: 'numeric',
+    minute: 'numeric',
+    second: 'numeric'
+  };
+
+  return new Intl.DateTimeFormat('en-US', options).format(dateObject);
+}
+
+function checkSalary(salary){
+  if(/\d/.test(salary)){
+    return salary;
+  }
+  return "Not Mentioned";
+}
+
 export function updateJobTiles(apiResponse) {
   // Clear existing job tiles
   document.getElementById("tab-1").innerHTML = "";
@@ -55,20 +77,19 @@ export function updateJobTiles(apiResponse) {
               <span class="text-truncate me-3"><i class="fa fa-map-marker-alt text-primary me-2"></i>${job.location
       }</span>
               
-              <span class="text-truncate me-0"><i class="far fa-money-bill-alt text-primary me-2"></i>${job.salary
-      }</span>
+              <span class="text-truncate me-0"><i class="far fa-money-bill-alt text-primary me-2"></i>${checkSalary(job.salary
+  )}</span>
             </div>
           </div>
           <div class="col-sm-12 col-md-4 d-flex flex-column align-items-start align-items-md-end justify-content-center">
             <div class="d-flex mb-3">
-              <a class="btn btn-light btn-square me-3" href=""><i class="far fa-heart text-primary"></i></a>
-              <a class="btn btn-primary" href="">${getStatusLabel(
+              <a class="" href="">${getStatusLabel(
         job.status
       )}</a>
               
             </div>
-            <small class="text-truncate"><i class="far fa-calendar-alt text-primary me-2"></i>Date Line: ${job.updatedDate
-      }</small>
+            <small class="text-truncate"><i class="far fa-calendar-alt text-primary me-2"></i>Date: ${getdatestring(job.createdDate
+      )}</small>
           </div>
         </div>
       `;

@@ -82,7 +82,7 @@ namespace repository.Repositories
 
         public List<Job> GetUserJobs(Guid userId)
         {
-            var jobs = dbContext.Job.Where(u=>u.userId == userId).ToList();
+            var jobs = dbContext.Job.Where(u=>u.userId == userId).OrderByDescending(x=>x.CreatedDate).ToList();
 
             return jobs;
         }
