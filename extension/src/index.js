@@ -65,79 +65,80 @@ export const App = () => {
     setState(false);
 
     // Check if the extension has incognito access
-    chrome.extension.isAllowedIncognitoAccess((isAllowedAccess) => {
-      if (isAllowedAccess) {
-        chrome.identity.getAuthToken({ interactive: true, scopes: ['profile', 'email'] }, (token) => {
-          if (chrome.runtime.lastError || !token) {
-            alert(`SSO ended with an error: ${JSON.stringify(chrome.runtime.lastError)}`);
-            return;
-          }
-          signInWithCredential(auth, GoogleAuthProvider.credential(null, token))
-            .then(async (res) => {
-              try {
-                const accessToken = res.user.stsTokenManager.accessToken;
-                const apiUrl = 'https://localhost:7100/Auth/';
-                const headers = {
-                  Authorization: `Bearer ${accessToken}`,
-                  'Content-Type': 'application/json',
-                };
 
-                // Transform user data
-                const transformedModel = transformJson(res);
-
-
-                // Make API call to save user data on the server
-                fetch(apiUrl, {
-                  method: 'POST',
-                  headers: headers,
-                  body: JSON.stringify(transformedModel)
-                })
-                  .then(response => response.json())
-                  .then(data => {
-                    //alert(JSON.stringify(data));
-                    // Set the user in the component state
-
-                    const dataToStore = { user: JSON.stringify(data), "access_token": accessToken };
-                    setUser(data);
-                    setLoading(false);
-                    //alert(JSON.stringify(dataToStore));
-                    // Save data to chrome.storage.local
-                    chrome.storage.local.set({ myData: dataToStore }, function () {
-                      console.log('Data saved in content script');
-                    });
-
-                    document.getElementById("clickButton").click();
-
-                    chrome.storage.local.get('myData', function (result) {
-                      fetch(
-                        "https://localhost:7100/User?userId=" + JSON.parse(result.myData.user).id
-                      )
-                        .then((response) => response.json())
-                        .then((data) => {
-                          // Process the API response and update the job tiles
-                          updateJobTiles(data);
-                        })
-                        .catch((error) => console.error("Error fetching API:", error));
-
-                    });
-
-                    //alert(JSON.parse(localStorage.getItem("user")).id);
-                  })
-                  .catch(error => console.error(error));
-              } catch (error) {
-                //alert(JSON.stringify(error));
-                console.error('Error adding data to the database:', error);
-              }
-              console.log("signed in!");
-            })
-            .catch((err) => {
-              console.log(err);
-              //alert(`SSO ended with an error: ${err}`);
-            });
-        });
-      } else {
-        console.error("Identity API is disabled in incognito windows.");
+    chrome.identity.getAuthToken({ interactive: true, scopes: ['profile', 'email'] }, (token) => {
+      if (chrome.runtime.lastError || !token) {
+        alert(`SSO ended with an error: ${JSON.stringify(chrome.runtime.lastError)}`);
+        return;
       }
+      signInWithCredential(auth, GoogleAuthProvider.credential(null, token))
+        .then(async (res) => {
+          try {
+            const accessToken = res.user.stsTokenManager.accessToken;
+            const apiUrl = 'https://localhost:7100/Auth/';
+            const headers = {
+              Authorization: `Bearer ${accessToken}`,
+              'Content-Type': 'application/json',
+            };
+
+            // Transform user data
+            const transformedModel = transformJson(res);
+
+
+            // Make API call to save user data on the server
+            fetch(apiUrl, {
+              method: 'POST',
+              headers: headers,
+              body: JSON.stringify(transformedModel)
+            })
+              .then(response => response.json())
+              .then(data => {
+                //alert(JSON.stringify(data));
+                // Set the user in the component state
+
+                const dataToStore = { user: JSON.stringify(data), "access_token": accessToken };
+                setUser(data);
+                setLoading(false);
+                //alert(JSON.stringify(dataToStore));
+                // Save data to chrome.storage.local
+                chrome.storage.local.set({ myData: dataToStore }, function () {
+                  console.log('Data saved in content script');
+                });
+
+                document.getElementById("clickButton").click();
+
+                chrome.storage.local.get('myData', function (result) {
+                  fetch(
+                    "https://localhost:7100/User?userId=" + JSON.parse(result.myData.user).id, {
+                    method: 'GET',
+                    headers: {
+                      Authorization: `Bearer ` + result.myData.access_token,
+                      'Content-Type': 'application/json'
+                    }
+                  }
+                  )
+                    .then((response) => response.json())
+                    .then((data) => {
+                      // Process the API response and update the job tiles
+                      updateJobTiles(data);
+                    })
+                    .catch((error) => console.error("Error fetching API:", error));
+
+                });
+
+                //alert(JSON.parse(localStorage.getItem("user")).id);
+              })
+              .catch(error => console.error(error));
+          } catch (error) {
+            //alert(JSON.stringify(error));
+            console.error('Error adding data to the database:', error);
+          }
+          console.log("signed in!");
+        })
+        .catch((err) => {
+          console.log(err);
+          //alert(`SSO ended with an error: ${err}`);
+        });
     });
   };
 
@@ -171,7 +172,13 @@ export const App = () => {
         setState(true);
 
         fetch(
-          "https://localhost:7100/User?userId=" + JSON.parse(result.myData.user).id
+          "https://localhost:7100/User?userId=" + JSON.parse(result.myData.user).id, {
+          method: 'GET',
+          headers: {
+            Authorization: `Bearer ` + result.myData.access_token,
+            'Content-Type': 'application/json'
+          }
+        }
         )
           .then((response) => response.json())
           .then((data) => {
@@ -286,7 +293,7 @@ export const App = () => {
         </div>
       </div>
     );
-  } else if (!isInIncognitoMode) {
+  } else {
 
     // Render the "Sign In" button only if not in incognito mode
     return (
@@ -295,8 +302,6 @@ export const App = () => {
         <button><img src="google-logo.png" alt="my image" onClick={signIn} /></button>
       </div>
     );
-  } else {
-    return <h1>Hello From JobTracker</h1>;
   }
 };
 

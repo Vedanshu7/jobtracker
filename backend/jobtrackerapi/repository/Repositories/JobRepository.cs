@@ -94,9 +94,29 @@ namespace repository.Repositories
         }
 
         // Updates a job based on its unique identifier and returns the updated job.
-        public Job UpdateJob(Guid id)
+        public Job UpdateJob(Guid id, Job job)
         {
-            throw new NotImplementedException();
+            var jobFromDb = dbContext.Job.Where(x=>x.Id==job.Id).Any();
+            if (jobFromDb)
+            {
+                dbContext.Job.Update(job);
+                dbContext.SaveChanges();
+                return job;
+            }
+            return new Job();
+
+        }
+
+        public List<string> GetLocations(Guid userId)
+        {
+            var userJobs = dbContext.Job.Where(x=>x.userId==userId).ToList();
+            var locations = new List<string>();
+            userJobs.ForEach(x =>
+            {
+                if(x.location != null)
+                    locations.Add(x.location);
+            });
+            return locations;
         }
     }
 }

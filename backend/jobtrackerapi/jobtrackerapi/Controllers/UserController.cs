@@ -13,13 +13,8 @@ namespace jobtrackerapi.Controllers
             service = _userService;
         }
 
-        // [HttpGet(Name = "GetUser")]
-        // public List<service.Models.User> Get()
-        // {
-        //     return service.GetAll().Result;
-        // }
 
-        
+        [GoogleTokenValidation]
         [HttpGet(Name ="jobs")]
         public List<service.Models.Job> GetUserJobs(Guid userId)
         {

@@ -18,5 +18,9 @@ namespace service.Interface
         public bool DeleteJob(Guid id);
 
         public Task<Dictionary<string, string>> GetStatuses(Guid userId);
+
+        public Task<Job> UpdateJob(Guid id, Job job);
+
+        public List<string> GetLocations(Guid userId);
     }
 }

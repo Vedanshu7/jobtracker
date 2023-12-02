@@ -16,7 +16,7 @@ namespace repository.Interface
         public List<Job> GetUsersJob(Guid userId);
 
         // Updates a job based on its unique identifier and returns the updated job.
-        public Job UpdateJob(Guid id);
+        public Job UpdateJob(Guid id, Job job);
 
         // Deletes a job based on its unique identifier and returns true if the operation was successful.
         public bool DeleteJob(Guid id);
@@ -24,5 +24,7 @@ namespace repository.Interface
         public List<Job> GetUserJobs(Guid userId);
 
         public Dictionary<string, string> GetStatuses(Guid userId);
+
+        public List<string> GetLocations(Guid userId);
     }
 }

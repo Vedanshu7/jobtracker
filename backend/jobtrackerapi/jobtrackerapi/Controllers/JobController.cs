@@ -36,33 +36,24 @@ namespace jobtrackerapi.Controllers
 
         // This HTTP DELETE action method is used to delete a job by its ID.
         [HttpDelete("{id}")]
-        public IActionResult DeleteJob(Guid id)
+        public bool DeleteJob(Guid id)
         {
             try
             {
                 // Call the DeleteJob method from the injected service to delete the job.
                 bool deletionResult = service.DeleteJob(id);
 
-                // Check if the deletion was successful.
-                if (deletionResult)
-                {
-                    // Return a 200 OK response with a success message if deletion is successful.
-                    return Ok($"Job with ID {id} has been successfully deleted.");
-                }
-                else
-                {
-                    // Return a 404 Not Found response if the job with the specified ID is not found.
-                    return NotFound($"Job with ID {id} not found.");
-                }
+                return deletionResult;
             }
             catch (Exception ex)
             {
                 // Return a 500 Internal Server Error response in case of an exception.
-                return StatusCode(500, "Internal server error");
+                return false;
             }
         }
 
         // This HTTP GET action method is used to retrieve a job by its ID.
+        //[GoogleTokenValidation]
         [HttpGet("{id}")]
         public Job GetJob(Guid id)
         {
@@ -86,5 +77,34 @@ namespace jobtrackerapi.Controllers
             }
         }
 
+        [HttpPut("{id}")]
+        public Job UpdateJob(Guid id, Job job)
+        {
+            try
+            {
+                var jobFromDb = service.UpdateJob(id,job).Result;
+
+                if (jobFromDb != null)
+                {
+                    return jobFromDb; // Return a 200 OK response with the job if found.
+                }
+                else
+                {
+                    return new Job(); // Return a 404 Not Found if the job is not found.
+                }
+            }
+            catch (Exception ex)
+            {
+                // Log or handle the exception based on your application's requirements
+                return new Job();
+            }
+        }
+
+        [GoogleTokenValidation]
+        [HttpGet("/locations/{id}")]
+        public List<string> GetLocations(Guid id)
+        {
+            return service.GetLocations(id);
+        }
     }
 }

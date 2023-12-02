@@ -45,19 +45,20 @@ function injectContentScript() {
           var jobCardContainers = document.getElementsByClassName('job-card-container');
           for (var i = 0; i < jobCardContainers.length; i++) {
             if (data.hasOwnProperty(jobCardContainers[i].dataset.jobId)) {
-
-              var htmlRef = '<ul class="job-card-list__footer-wrapper job-card-container__footer-wrapper flex-shrink-zero display-flex t-sans t-12 t-black--light t-normal t-roman"><li class="job-card-container__footer-item inline-flex align-items-right" style="color:red">'
-                + data[jobCardContainers[i].dataset.jobId] + '</li></ul>';
-              var htmlObject = document.createElement('ul');
-              htmlObject.innerHTML = htmlRef;
-              jobCardContainers[i].appendChild(htmlObject);
+              if (!document.getElementById("my-" + jobCardContainers[i].dataset.jobId)) {
+                var htmlRef = '<ul id="my-' + jobCardContainers[i].dataset.jobId + '" class="job-card-list__footer-wrapper job-card-container__footer-wrapper flex-shrink-zero display-flex t-sans t-12 t-black--light t-normal t-roman"><li class="job-card-container__footer-item inline-flex align-items-right" style="color:red">'
+                  + data[jobCardContainers[i].dataset.jobId] + '</li></ul>';
+                var htmlObject = document.createElement('ul');
+                htmlObject.innerHTML = htmlRef;
+                jobCardContainers[i].appendChild(htmlObject);
+              }
             }
           }
         })
         .catch((error) => console.error("Error fetching API:", error));
 
     });
-   
+
 
     // Add a click event listener to an element with the class 'jobs-apply-button'.
     document.getElementsByClassName('jobs-apply-button')[0].addEventListener("click", async () => {
@@ -139,7 +140,7 @@ function injectContentScript() {
     });
   }
   catch (err) {
-    
+
   }
 
 }

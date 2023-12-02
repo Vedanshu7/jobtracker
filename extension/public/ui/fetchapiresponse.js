@@ -4,7 +4,13 @@ export function fetchAndDisplayData() {
   // Fetch the API data
   chrome.storage.local.get('myData', function (result) {
     fetch(
-      "https://localhost:7100/User?userId=" + JSON.parse(result.myData.user).id
+      "https://localhost:7100/User?userId=" + JSON.parse(result.myData.user).id, {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ` + result.myData.access_token,
+        'Content-Type': 'application/json'
+      }
+    }
     )
       .then((response) => response.json())
       .then((data) => {

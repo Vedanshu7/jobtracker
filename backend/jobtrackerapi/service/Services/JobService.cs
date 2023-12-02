@@ -56,5 +56,26 @@ namespace service.Services
         {
             return Task.FromResult(jobRepository.GetStatuses(userId));
         }
+
+        public async Task<Job> UpdateJob(Guid id, Job job)
+        {
+            try
+            {
+                // Retrieve the job from the jobRepository based on the provided ID.
+                var jobFromDb = jobRepository.UpdateJob(id,_mapper.Map<database.Models.Job>(job));
+
+                // Map the retrieved job to a Job model using AutoMapper.
+                return _mapper.Map<Job>(jobFromDb);
+            }
+            catch (Exception ex)
+            {
+                return new Job();
+            }
+        }
+
+        public List<string> GetLocations(Guid userId)
+        {
+            return jobRepository.GetLocations(userId);
+        }
     }
 }

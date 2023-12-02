@@ -40,4 +40,40 @@ function filterJobs() {
 
 document.addEventListener("DOMContentLoaded", function () {
   document.getElementById("searchButton").addEventListener("click", filterJobs);
+
+  try {
+    chrome.storage.local.get('myData', async function (result) {
+      console.log(JSON.parse(result.myData.user))
+      const response = await fetch("https://localhost:7100/locations/" + JSON.parse(result.myData.user).id, {
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ` + result.myData.access_token,
+          'Content-Type': 'application/json'
+        }
+      });
+      console.log(response);
+      const data = await response.json();
+      const selectElement = document.getElementById("locationSelect");
+
+      // Clear existing options
+      selectElement.innerHTML = "";
+      const optionElement = document.createElement("option");
+      optionElement.value = "select";
+      optionElement.text = "select";
+      optionElement.selected = true;
+      selectElement.appendChild(optionElement);
+
+      // Add new options
+      data.forEach(option => {
+        const optionElement = document.createElement("option");
+        optionElement.value = option;
+        optionElement.text = option;
+        selectElement.appendChild(optionElement);
+      });
+    });
+
+  } catch (error) {
+    console.error("Error fetching data:", error);
+  }
 });
+
