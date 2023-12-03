@@ -10,7 +10,20 @@ document.addEventListener("DOMContentLoaded", function () {
 
   document
     .getElementById("updateJobButton")
-    .addEventListener("click", updateJobDetails);
+    .addEventListener("click", function () {
+      // Show the Submit button
+      updateJobDetails();
+      document.getElementById("submitButtonContainer").style.display = "block";
+    });
+
+  // Handle the submit logic
+  document
+    .getElementById("submitButton")
+    .addEventListener("click", function () {
+      // Call the submitForm function or add your submit logic here
+      submitForm();
+      document.getElementById("submitButtonContainer").style.display = "none";
+    });
 });
 export function getStatusLabel(status) {
   switch (status) {
@@ -67,9 +80,32 @@ function displayJobDetails(jobDetails) {
                   <span class="text-truncate me-3"><i class="far fa-money-bill-alt text-primary me-2"></i>${
                     jobDetails.salary
                   }</span>
-                  <span class="text-truncate me-3"><i class="far fa-money-bill-alt text-primary me-2"></i>${getStatusLabel(
+                
+                  <!-- <span class="text-truncate me-3"><i class="far fa-money-bill-alt text-primary me-2"></i>${getStatusLabel(
                     jobDetails.status
-                  )}</span>
+                  )}</span> -->
+                  
+                <span class="text-truncate me-3"><i class="far fa-money-bill-alt text-primary me-2"></i>`;
+
+  // Replace the static status display with a dynamic <select> element
+  content += `
+                                <select id="jobStatus" ${
+                                  jobDetails.isEditable ? "" : "disabled"
+                                }>
+                                  <option value="0" ${
+                                    jobDetails.status === 0 ? "selected" : ""
+                                  }>Applied</option>
+                                  <option value="1" ${
+                                    jobDetails.status === 1 ? "selected" : ""
+                                  }>In Review</option>
+                                  <option value="2" ${
+                                    jobDetails.status === 2 ? "selected" : ""
+                                  }>Accepted</option>
+                                </select>
+                              </span>
+              
+                  
+
                 </div>
               </div>
   
@@ -89,34 +125,31 @@ function displayJobDetails(jobDetails) {
   jobDetailsContainer.innerHTML = content;
 }
 
-// async function updateJobDetails() {
-//   // Assume jobId is available (you can get it from the URL, for example)
-//   // Get jobId from the URL
-//   const urlParams = new URLSearchParams(window.location.search);
-//   const jobId = urlParams.get("jobId");
+async function updateJobDetails() {
+  var inputElements = document.querySelectorAll("input, select");
 
-//   console.log(jobId);
-//   console.log(urlParams);
-//   // Fetch job details
-//   const jobDetails = await fetchJobDetails(jobId);
+  // Toggle the 'disabled' attribute for each input and select
+  inputElements.forEach(function (element) {
+    element.disabled = !element.disabled;
+  });
+  //   const shouldEnableStatus = true; // Set this based on your condition
 
-//   if (jobDetails) {
-//     // Prompt the user for new values
-//     const newLocation = prompt("Enter new location:", jobDetails.location);
-//     const newSalary = prompt("Enter new salary:", jobDetails.salary);
-//     const newTitle = prompt("Enter new job title:", jobDetails.title);
+  //   // Get the status select element
+  //   const statusSelect = document.getElementById("jobStatus");
 
-//     // Validate inputs
-//     if (newLocation && newSalary && newTitle) {
-//       // Update the job details
-//       jobDetails.location = newLocation;
-//       jobDetails.salary = newSalary;
-//       jobDetails.title = newTitle;
+  //   // Enable or disable the status button based on the condition
+  //   statusSelect.disabled = !shouldEnableStatus;
+}
 
-//       // Perform any additional update logic (e.g., send an update request to the server)
-//       console.log("Job details updated:", jobDetails);
-//     } else {
-//       alert("Invalid input. Please fill in all fields.");
-//     }
-//   }
-// }
+function submitForm() {
+  // Get all input and select elements by class name
+  var inputElements = document.querySelectorAll("input, select");
+
+  // Validate inputs if needed
+  // ...
+
+  // Disable all input and select elements
+  inputElements.forEach(function (element) {
+    element.disabled = true;
+  });
+}
