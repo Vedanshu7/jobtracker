@@ -8,7 +8,7 @@ namespace jobtrackerapi.Controllers
     /// Controller for handling authentication-related actions.
     /// </summary>
     [ApiController]
-    [Route("[controller]")]
+    [Route("/Auth")]
     public class AuthController : Controller
     {
         private readonly IAuthService service;

@@ -6,7 +6,7 @@ namespace jobtrackerapi.Controllers
 {
     // This class represents a controller for managing job-related operations in a web API.
     [ApiController]
-    [Route("[controller]")]
+    [Route("/Job")]
     public class JobController : Controller
     {
         private readonly IJobService service;

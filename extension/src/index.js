@@ -73,7 +73,7 @@ export const App = () => {
         .then(async (res) => {
           try {
             const accessToken = res.user.stsTokenManager.accessToken;
-            const apiUrl = 'https://localhost:7100/Auth/';
+            const apiUrl = 'https://jobtrackerapi-asc.azurewebsites.net/Auth/';
             const headers = {
               Authorization: `Bearer ${accessToken}`,
               'Content-Type': 'application/json',
@@ -107,7 +107,7 @@ export const App = () => {
 
                 chrome.storage.local.get('myData', function (result) {
                   fetch(
-                    "https://localhost:7100/User?userId=" + JSON.parse(result.myData.user).id, {
+                    "https://jobtrackerapi-asc.azurewebsites.net/User?userId=" + JSON.parse(result.myData.user).id, {
                     method: 'GET',
                     headers: {
                       Authorization: `Bearer ` + result.myData.access_token,
@@ -169,7 +169,7 @@ export const App = () => {
         setLoading(false);
 
         fetch(
-          "https://localhost:7100/User?userId=" + JSON.parse(result.myData.user).id, {
+          "https://jobtrackerapi-asc.azurewebsites.net/User?userId=" + JSON.parse(result.myData.user).id, {
           method: 'GET',
           headers: {
             Authorization: `Bearer ` + result.myData.access_token,

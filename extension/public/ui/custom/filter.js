@@ -13,7 +13,7 @@ function filterJobs() {
   // Fetch the API data (you need to implement this in fetchapiresponse.js)
   chrome.storage.local.get('myData', async function (result) {
     fetch(
-      "https://localhost:7100/User?userId=" + JSON.parse(result.myData.user).id, {
+      "https://jobtrackerapi-asc.azurewebsites.net/User?userId=" + JSON.parse(result.myData.user).id, {
       method: 'GET',
       headers: {
         Authorization: `Bearer ` + result.myData.access_token,
@@ -51,7 +51,7 @@ document.addEventListener("DOMContentLoaded", function () {
   try {
     chrome.storage.local.get('myData', async function (result) {
       console.log(JSON.parse(result.myData.user))
-      const response = await fetch("https://localhost:7100/locations/" + JSON.parse(result.myData.user).id, {
+      const response = await fetch("https://jobtrackerapi-asc.azurewebsites.net/locations/" + JSON.parse(result.myData.user).id, {
         method: 'GET',
         headers: {
           Authorization: `Bearer ` + result.myData.access_token,

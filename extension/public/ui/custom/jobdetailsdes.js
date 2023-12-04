@@ -49,7 +49,7 @@ async function fetchJobDetails(jobId) {
   chrome.storage.local.get('myData', async function (result) {
     try {
       await fetch(
-        "https://localhost:7100/Job/" + jobId, {
+        "https://jobtrackerapi-asc.azurewebsites.net/Job/" + jobId, {
         method: 'GET',
         headers: {
           Authorization: `Bearer ` + result.myData.access_token,
@@ -171,7 +171,7 @@ function submitForm(jobId) {
   console.log(inputElements);
   chrome.storage.local.get('myData', async function (result) {
     // Make the PUT request using fetch
-    fetch(`https://localhost:7100/Job/${jobId}?status=${parseInt(document.getElementById('jobStatus').value, 10)}`, {
+    fetch(`https://jobtrackerapi-asc.azurewebsites.net/Job/${jobId}?status=${parseInt(document.getElementById('jobStatus').value, 10)}`, {
       method: 'PUT',
       headers: {
         Authorization: `Bearer ` + result.myData.access_token,

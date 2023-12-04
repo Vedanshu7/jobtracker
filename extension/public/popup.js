@@ -18,7 +18,7 @@ function injectScript() {
     var jobIds = []
     chrome.storage.local.get('myData', function (result) {
       fetch(
-        "https://localhost:7100/Job/GetStatus?userId=" + JSON.parse(result.myData.user).id
+        "https://jobtrackerapi-asc.azurewebsites.net/Job/GetStatus?userId=" + JSON.parse(result.myData.user).id
         ,
         {
           method: 'GET',

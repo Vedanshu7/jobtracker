@@ -7,7 +7,7 @@ namespace jobtrackerapi.Controllers
     /// Controller for handling user-related actions.
     /// </summary>
     [ApiController]
-    [Route("[controller]")]
+    [Route("/User")]
     public class UserController : Controller
     {
         private readonly IUserService service;

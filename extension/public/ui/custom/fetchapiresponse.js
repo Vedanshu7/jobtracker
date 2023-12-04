@@ -2,7 +2,7 @@ export function fetchAndDisplayData() {
   // Fetch the API data
   chrome.storage.local.get('myData', function (result) {
     fetch(
-      "https://localhost:7100/User?userId=" + JSON.parse(result.myData.user).id, {
+      "https://jobtrackerapi-asc.azurewebsites.net/User?userId=" + JSON.parse(result.myData.user).id, {
       method: 'GET',
       headers: {
         Authorization: `Bearer ` + result.myData.access_token,
@@ -66,7 +66,7 @@ export function deleteJob(jobId) {
   console.log(jobId);
   //Make a DELETE request to the API endpoint with the job ID
   chrome.storage.local.get('myData', function (result) {
-    fetch(`https://localhost:7100/Job/${jobId}`, {
+    fetch(`https://jobtrackerapi-asc.azurewebsites.net/Job/${jobId}`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
@@ -204,7 +204,7 @@ document.addEventListener("DOMContentLoaded", function () {
   document.getElementById('excel').addEventListener("click", () => {
     chrome.storage.local.get('myData', function (result) {
       fetch(
-        "https://localhost:7100/User?userId=" + JSON.parse(result.myData.user).id, {
+        "https://jobtrackerapi-asc.azurewebsites.net/User?userId=" + JSON.parse(result.myData.user).id, {
         method: 'GET',
         headers: {
           Authorization: `Bearer ` + result.myData.access_token,

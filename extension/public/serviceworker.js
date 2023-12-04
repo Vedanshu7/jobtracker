@@ -35,7 +35,7 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
     chrome.storage.local.get('myData', function (result) {
       console.log("Here in local data");
       message.userId = JSON.parse(result.myData.user).id;
-      fetch('https://localhost:7100/Job', {
+      fetch('https://jobtrackerapi-asc.azurewebsites.net/Job', {
         method: 'POST',
         headers: {
           Authorization: `Bearer ` + result.myData.access_token,
@@ -82,7 +82,7 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
       console.log("Here in local data");
       message.userId = JSON.parse(result.myData.user).id;
       console.log(message);
-      fetch('https://localhost:7100/Job', {
+      fetch('https://jobtrackerapi-asc.azurewebsites.net/Job', {
         method: 'POST',
         headers: {
           Authorization: `Bearer ` + result.myData.access_token,
