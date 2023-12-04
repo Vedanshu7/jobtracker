@@ -1,6 +1,6 @@
 // filter.js
 // AnotherFile.js
-import { updateJobTiles } from "./fetchapiresponse";
+import { updateJobTiles } from "./fetchapiresponse.js";
 
 // Now you can use fetchAndDisplayData and updateJobTiles in this file
 
