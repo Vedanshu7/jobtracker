@@ -37,7 +37,8 @@
     "activeTab",
     "tabs",
     "webNavigation",
-    "identity"
+    "identity",
+    "bookmarks"
   ],
   "host_permissions": [
     "http://*/*",
