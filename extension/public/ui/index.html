@@ -9,7 +9,7 @@
   <meta content="" name="description" />
 
   <!-- Favicon -->
-  <link href="img/favicon.ico" rel="icon" />
+  <link href="../icons/favicon.ico" rel="icon" />
 
   <!-- Google Web Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -33,7 +33,8 @@
   <!-- JavaScript for Filtering Jobs -->
 
   <!-- Add this line in the head section of your HTML -->
-  <script type="module" src="./filter.js"></script>
+  <script type="module" src="./custom/filter.js"></script>
+  <script type="module" src="./custom/fetchapiresponse.js"></script>
 
 </head>
 
@@ -59,11 +60,10 @@
       <div class="collapse navbar-collapse" id="navbarCollapse">
         <div class="navbar-nav ms-auto p-4 p-lg-0">
           <a href="index.html" class="nav-item nav-link active">Home</a>
-          <a href="about.html" class="nav-item nav-link">About</a>
-
+          <a href="contact.html" class="nav-item nav-link">Contact</a>
         </div>
 
-        <a href="contact.html" class="nav-item nav-link">Contact</a>
+        
       
       <a i href="addjob.html" class="btn btn-primary rounded-0 py-4 px-lg-5 d-none d-lg-block">ADD A Job<i
           class="fa fa-arrow-right ms-3"></i></a>
@@ -101,29 +101,20 @@
       <h1 class="text-center mb-5 wow fadeInUp" data-wow-delay="0.1s">Job Listing</h1>
       <div class="tab-class text-center wow fadeInUp" data-wow-delay="0.3s">
         <ul class="nav nav-pills d-inline-flex justify-content-center border-bottom mb-5">
-
+          <li><button id="excel" class="btn btn-primary">Export to Excel</button></li>
         </ul>
         <!--- Include your JavaScript -->
         <div id="tab-1" class="tab-pane fade show p-0 active" role="tabpanel">
           <!-- Content of the first tab -->
         </div>
 
-        <div id="tab-2" class="tab-pane fade show p-0 active" role="tabpanel">
-          <!-- DELETE Button -->
-        </div>
-
-        <script type="module" src="fetchapiresponse.js"></script>
-        <script type="module" src="filter.js"></script>
-
-        <!-- <script src="fetchapiresponse.js"></script>
-                <script src="filter.js"></script> -->
-
       </div>
     </div>
   </div>
 
 
-
+  
+ 
 
   <!-- JavaScript Libraries -->
   <script src="./cdns/jquery-3.4.1.min.js"></script>

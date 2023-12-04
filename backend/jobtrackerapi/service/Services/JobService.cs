@@ -57,12 +57,12 @@ namespace service.Services
             return Task.FromResult(jobRepository.GetStatuses(userId));
         }
 
-        public async Task<Job> UpdateJob(Guid id, Job job)
+        public async Task<Job> UpdateJob(Guid id, int status)
         {
             try
             {
                 // Retrieve the job from the jobRepository based on the provided ID.
-                var jobFromDb = jobRepository.UpdateJob(id,_mapper.Map<database.Models.Job>(job));
+                var jobFromDb = jobRepository.UpdateJob(id,status);
 
                 // Map the retrieved job to a Job model using AutoMapper.
                 return _mapper.Map<Job>(jobFromDb);

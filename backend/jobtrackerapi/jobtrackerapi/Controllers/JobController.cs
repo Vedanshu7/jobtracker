@@ -35,6 +35,7 @@ namespace jobtrackerapi.Controllers
         }
 
         // This HTTP DELETE action method is used to delete a job by its ID.
+        [GoogleTokenValidation]
         [HttpDelete("{id}")]
         public bool DeleteJob(Guid id)
         {
@@ -53,7 +54,7 @@ namespace jobtrackerapi.Controllers
         }
 
         // This HTTP GET action method is used to retrieve a job by its ID.
-        //[GoogleTokenValidation]
+        [GoogleTokenValidation]
         [HttpGet("{id}")]
         public Job GetJob(Guid id)
         {
@@ -77,12 +78,13 @@ namespace jobtrackerapi.Controllers
             }
         }
 
+        [GoogleTokenValidation]
         [HttpPut("{id}")]
-        public Job UpdateJob(Guid id, Job job)
+        public Job UpdateJob(Guid id, int status)
         {
             try
             {
-                var jobFromDb = service.UpdateJob(id,job).Result;
+                var jobFromDb = service.UpdateJob(id,status).Result;
 
                 if (jobFromDb != null)
                 {

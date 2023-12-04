@@ -34,7 +34,7 @@ namespace repository.Interface
         /// <param name="id">Unique identifier of the job to be updated.</param>
         /// <param name="job">Updated Job object.</param>
         /// <returns>Returns the updated Job object.</returns>
-        public Job UpdateJob(Guid id, Job job);
+        public Job UpdateJob(Guid id, int status);
 
         /// <summary>
         /// Deletes a job based on its unique identifier and returns true if the operation was successful.

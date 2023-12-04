@@ -42,7 +42,7 @@ namespace service.Interface
         /// <param name="id">Unique identifier of the job to be updated.</param>
         /// <param name="job">Updated Job object.</param>
         /// <returns>Returns a Task<Job> representing the updated job.</returns>
-        public Task<Job> UpdateJob(Guid id, Job job);
+        public Task<Job> UpdateJob(Guid id,int status);
 
         /// <summary>
         /// Retrieves job locations associated with a specific user.

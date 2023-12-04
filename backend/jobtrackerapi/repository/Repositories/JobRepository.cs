@@ -18,7 +18,7 @@ namespace repository.Repositories
         // Adds a job to the database and returns the added job.
         public Job AddJob(Job job)
         {
-            var alreadyExists = dbContext.Job.Where(x => job.jobId == x.jobId).FirstOrDefault();
+            var alreadyExists = dbContext.Job.Where(x => job.jobId == x.jobId && job.userId == x.userId).FirstOrDefault();
             if (alreadyExists != null)
             {
                 return alreadyExists;
@@ -94,14 +94,15 @@ namespace repository.Repositories
         }
 
         // Updates a job based on its unique identifier and returns the updated job.
-        public Job UpdateJob(Guid id, Job job)
+        public Job UpdateJob(Guid id,int status)
         {
-            var jobFromDb = dbContext.Job.Where(x=>x.Id==job.Id).Any();
-            if (jobFromDb)
+            var jobFromDb = dbContext.Job.Where(x=>x.Id== id).FirstOrDefault();
+            if (jobFromDb != null)
             {
-                dbContext.Job.Update(job);
+                jobFromDb.status = (StatusEnum)status;
+                dbContext.Job.Update(jobFromDb);
                 dbContext.SaveChanges();
-                return job;
+                return jobFromDb;
             }
             return new Job();
 

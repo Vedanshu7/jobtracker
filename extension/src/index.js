@@ -16,7 +16,6 @@ export var auth = getAuth(firebase);
 
 export const App = () => {
   const [user, setUser] = React.useState(undefined);
-  const [state, setState] = React.useState(false);
 
   const moredetails = () => {
     // Redirect to index.html in the template
@@ -25,9 +24,8 @@ export const App = () => {
     });
   };
 
-  const [loading, setLoading] = React.useState(true);
+  const [loading, setLoading] = React.useState(false);
 
-  const isInIncognitoMode = chrome.extension.inIncognitoContext;
 
   function transformJson(json) {
     const transformedModel = {
@@ -62,7 +60,7 @@ export const App = () => {
 
   const signIn = (e) => {
     setLoading(true);
-    setState(false);
+
 
     // Check if the extension has incognito access
 
@@ -169,7 +167,6 @@ export const App = () => {
         // Now you can set your React component state using setUser(userData)
         setUser(userData);
         setLoading(false);
-        setState(true);
 
         fetch(
           "https://localhost:7100/User?userId=" + JSON.parse(result.myData.user).id, {
@@ -185,12 +182,15 @@ export const App = () => {
             // Process the API response and update the job tiles
             updateJobTiles(data);
           })
-          .catch((error) => console.error("Error fetching API:", error));
+          .catch((error) => {
+            setUser(null);
+            console.error("Error fetching API:", error)
+          });
 
       } else {
         // The data doesn't exist in storage
         console.log('User data not found in storage');
-        setLoading(false);
+        setUser(null);
       }
     });
   }, []);
@@ -229,7 +229,7 @@ export const App = () => {
         jobItem.addEventListener("click", () => {
           // Redirect to the job details page with the job ID
           chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-            chrome.tabs.create({ url: chrome.runtime.getURL("/ui/job-detail.html?jobId="+job.id) });
+            chrome.tabs.create({ url: chrome.runtime.getURL("/ui/job-detail.html?jobId=" + job.id) });
           });
         });
         // Append the job item to the tab-1 container
@@ -242,23 +242,11 @@ export const App = () => {
     });
   }
 
-  function getStatusLabel(status) {
-    switch (status) {
-      case 1:
-        return "Applied";
-      case 2:
-        return "In Review";
-      case 3:
-        return "Accepted";
-      default:
-        return "Apply Now";
-    }
-  }
 
 
   if (loading) return <img
     style={{ height: "100px", width: "100px" }}
-    src="giphy.gif"
+    src="./icons/giphy.gif"
     alt="Loading..."
     className="loader-image"
   />;
@@ -278,7 +266,7 @@ export const App = () => {
             </button>
             <div className="collapse navbar-collapse" id="navbarCollapse">
               <div className="navbar-nav ms-auto p-4 p-lg-0">
-                <a href="#" className="nav-item nav-link active">Signed in as {JSON.parse(localStorage.getItem("user")).name}.</a>
+                <a href="#" className="nav-item nav-link active">Signed in as {user.name}.</a>
                 <a href="" onClick={callSync} className="nav-item nav-link">Sync In</a>
               </div>
 
@@ -305,7 +293,7 @@ export const App = () => {
     return (
       <div>
 
-        <button><img src="google-logo.png" alt="my image" onClick={signIn} /></button>
+        <button><img src="./icons/google-logo.png" alt="my image" onClick={signIn} /></button>
       </div>
     );
   }
